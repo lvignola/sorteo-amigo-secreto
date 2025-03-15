@@ -76,6 +76,16 @@ function actualizarAmigos(nombreAmigo) {
 }
 
 //agregar esta condición dentro de la función "Sortear amigo"
+
+function sortearAmigo() {
+    const sorteo = Math.floor((Math.random)*amigos.length)
+    if (amigos.length < 2) {
+        asignarMensajeElemento('Por favor ingresar al menos dos nombres a la lista', 'h2')
+    } else {
+        asignarMensajeElemento (`La persona afortunada es ${sorteo}`,'h2')
+    }
+    return
+}
 // if (amigos.length < 2){
 //     asignarMensajeElemento('ingresá al menos un nombre más a la lista','h2');
 // }
