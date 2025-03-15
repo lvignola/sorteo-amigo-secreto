@@ -16,7 +16,7 @@
     //     if (nombreAmigo === '') {
         //         asignarMensajeElemento('Por favor, ingresá un nombre válido','h2');
         //     } else {
-            //         asignarMensajeElemento('Digite el nombre de sus amigos','h2')
+            //         asignarMensajeElemento('Elige amigos a sortear','h2')
             //         amigos.push(nombreAmigo);
             //     }
             //     console.log(amigos);
