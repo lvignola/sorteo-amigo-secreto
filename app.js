@@ -1,59 +1,41 @@
-// El principal objetivo de este desafío es fortalecer tus habilidades en lógica de programación. 
-// Aquí deberás desarrollar la lógica para resolver el problema.
+/*Inicia declarando una variable de tipo array, que almacenará los nombres de los amigos ingresados. 
+Además se implementan dos variables para evitar el ingreso de caracteres especiales o números
+*/
 
-
-// let amigos = [];
-
-// function asignarMensajeElemento(texto,elemento) {
-//     let titulo = document.querySelector(elemento);
-//     titulo.innerHTML = texto;
-// }
-
-// function agregarAmigo() {
-    //     const inputAmigo = document.getElementById('amigo');
-    //     const nombreAmigo = inputAmigo.value.trim();
-    
-    //     if (nombreAmigo === '') {
-        //         asignarMensajeElemento('Por favor, ingresá un nombre válido','h2');
-        //     } else {
-            //         asignarMensajeElemento('Elige amigos a sortear','h2')
-            //         amigos.push(nombreAmigo);
-            //     }
-            //     console.log(amigos);
-            //     limpiarInput();
-            // }
-            
-            // function limpiarInput() {
-                //     let inputLimpio = document.getElementById('amigo')
-                //     inputLimpio.value = '';
-                // }
-                
-//Inicia declarando una variable de tipo array, que almacenará los nombres de los amigos ingresados.
 let amigos = [];
-
+let caracteresEspeciales = /[|°¬!"#$%&/()=¿?¡+*~¨{\ [\ ]^\-_.:;,<>@]/;
+let numeros = /[0-9]/;
+//let sorteo = Math.floor(Math.random()*amigos.length);
 
 //En lugar del alert,se da la información al usuario mediante la etiqueta h2 y el método 'querySelector'.
+
 function asignarMensajeElemento(texto, selector) {
     let elemento = document.querySelector(selector);
     elemento.innerHTML = texto;
 }
 
 /*Capturar el valor del campo de entrada: Utilizar document.getElementById o document.querySelector para obtener el texto ingresado 
-por el usuario.
-Validar la entrada: Implementar una validación para asegurarse de que el campo no esté vacío. 
-Si está vacío, mostrar un alert con un mensaje de error: "Por favor, inserte un nombre."*/
+por el usuario.*/
 
 function agregarAmigo() {
     const inputAmigo = document.getElementById('amigo');
-    const nombreAmigo = inputAmigo.value.trim();
+    const nombreAmigo = inputAmigo.value.trim();     //Se utiliza el método "trim" para recortar posibles espacios en la palabra.
     
-    if (nombreAmigo === '') {
+    /* Validar la entrada: Implementar una validación para asegurarse de que el campo no esté vacío. 
+    Si está vacío, muestra un mensaje de error: "Por favor, ingresá un nombre válido" en el h2 */
+    
+    if (nombreAmigo === '' || caracteresEspeciales.test(nombreAmigo) || numeros.test(nombreAmigo)) {
         asignarMensajeElemento('Por favor, ingresá un nombre válido', 'h2');
-    }else {
-        asignarMensajeElemento('Ingresá otro nombre o presiona el botón "Sortear amigo"', 'h2');
-    } 
+        return;
+    }
     amigos.push(nombreAmigo);
     amigos = amigos.filter(amigo => amigo.trim() !== '');
+    
+    if (amigos.length <2){
+        asignarMensajeElemento('Ingresá otro nombre', 'h2');
+    } else {
+        asignarMensajeElemento('Ingresá otro nombre o presiona el botón "Sortear amigo"', 'h2');
+    } 
     
     console.log(amigos);
     limpiarInput();
@@ -67,6 +49,7 @@ function limpiarInput() {
 }
 
 //Actualizar el array de amigos: Si el valor es válido, añadirlo al arreglo que almacena los nombre de amigos
+
 function actualizarAmigos(nombreAmigo) {
     const lista = document.getElementById('listaAmigos');
     let nuevoItem = document.createElement('li');
@@ -75,17 +58,35 @@ function actualizarAmigos(nombreAmigo) {
   
 }
 
-//agregar esta condición dentro de la función "Sortear amigo"
+//Se agrega la función "Sortear amigo" con la condición de que haya al menos dos nombres para sortear.
 
 function sortearAmigo() {
-    const sorteo = Math.floor((Math.random)*amigos.length)
     if (amigos.length < 2) {
         asignarMensajeElemento('Por favor ingresar al menos dos nombres a la lista', 'h2')
     } else {
-        asignarMensajeElemento (`La persona afortunada es ${sorteo}`,'h2')
+        const sorteo = Math.floor(Math.random()*amigos.length);
+        asignarMensajeElemento (`¡¡Felicidades ${amigos[sorteo]}!!`,'h2'); 
     }
-    return
+    borrarListaAmigos();
+    amigoSorteado();
+    return;
 }
-// if (amigos.length < 2){
-//     asignarMensajeElemento('ingresá al menos un nombre más a la lista','h2');
-// }
+
+// Actualiza la lista de amigos para mostrar solamente al ganador
+
+function borrarListaAmigos (){
+    const lista = document.getElementById('listaAmigos');
+    lista.innerHTML = '';
+    return;
+}
+
+function amigoSorteado () {
+    const ganador = document.getElementById('listaAmigos');
+    let item = document.createElement ('li');
+    item.textContent = 'Tu regalo está en camino!';
+    item.style.fontSize = '36px';
+    item.style.color = '#444444';
+    item.style.fontWeight = 'bold';
+    ganador.appendChild(item)
+    return;
+}
