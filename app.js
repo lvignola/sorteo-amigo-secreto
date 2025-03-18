@@ -64,11 +64,13 @@ function sortearAmigo() {
     if (amigos.length < 2) {
         asignarMensajeElemento('Por favor ingresar al menos dos nombres a la lista', 'h2')
     } else {
-        const sorteo = Math.floor(Math.random()*amigos.length);
-        asignarMensajeElemento (`¡¡Felicidades ${amigos[sorteo]}!!`,'h2'); 
+        let sorteo = Math.floor(Math.random()*amigos.length);
+        borrarListaAmigos();
+        asignarMensajeElemento('El resultado del sorteo es...', 'h2');
+        asignarMensajeElemento (`¡¡Felicidades ${amigos[sorteo]}, tu regalo está en camino!!`,'#resultado');
+        
     }
-    borrarListaAmigos();
-    amigoSorteado();
+    amigos = [];
     return;
 }
 
@@ -80,13 +82,4 @@ function borrarListaAmigos (){
     return;
 }
 
-function amigoSorteado () {
-    const ganador = document.getElementById('listaAmigos');
-    let item = document.createElement ('li');
-    item.textContent = 'Tu regalo está en camino!';
-    item.style.fontSize = '36px';
-    item.style.color = '#444444';
-    item.style.fontWeight = 'bold';
-    ganador.appendChild(item)
-    return;
-}
+
